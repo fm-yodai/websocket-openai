@@ -1,0 +1,58 @@
+VCR_PORT: undefined
+TAP version 14
+# Subtest: Fastify server
+    # Subtest: GET /
+        ok 1 - returns a status code of 200
+        ok 2 - returns the correct message
+        1..2
+    ok 1 - GET / # time=44.649ms
+    
+    # Subtest: GET /_/health
+        ok 1 - returns a status code of 200
+        ok 2 - returns the correct message
+        1..2
+    ok 2 - GET /_/health # time=1.486ms
+    
+    # Subtest: GET /_/metrics
+        ok 1 - returns a status code of 200
+        ok 2 - returns the correct message
+        1..2
+    ok 3 - GET /_/metrics # time=1.074ms
+    
+undefined
+    # Subtest: POST /event
+        ok 1 - returns a status code of 200
+        ok 2 - returns the correct message
+        1..2
+    ok 4 - POST /event # time=2.085ms
+    
+🐞 /answer called. localhost
+Query: {}
+Body: { from: '819012345678', to: '81312345678', uuid: 'test-uuid-123' }
+    # Subtest: POST /answer
+        ok 1 - returns a status code of 200
+        ok 2 - first action is talk
+        ok 3 - talk text is correct
+        ok 4 - second action is connect
+        ok 5 - URI contains caller parameter
+        ok 6 - URI contains called parameter
+        ok 7 - URI contains uuid parameter
+        ok 8 - URI contains token parameter
+        ok 9 - contentType is correct
+        1..9
+    ok 5 - POST /answer # time=7.358ms
+    
+    # Subtest: POST /connect without API key returns 401
+        ok 1 - requires API key
+        1..1
+    ok 6 - POST /connect without API key returns 401 # time=1.903ms
+    
+    # Subtest: POST /connect with invalid API key returns 403
+        ok 1 - rejects invalid API key
+        1..1
+    ok 7 - POST /connect with invalid API key returns 403 # time=1.178ms
+    
+    1..7
+ok 1 - Fastify server # time=67.338ms
+
+1..1

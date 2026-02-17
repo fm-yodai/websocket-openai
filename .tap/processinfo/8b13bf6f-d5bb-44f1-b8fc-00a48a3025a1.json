@@ -1,5 +1,5 @@
 {
-  "date": "2026-02-16T03:55:47.618Z",
+  "date": "2026-02-17T03:04:51.981Z",
   "argv": [
     "/opt/node22/bin/node",
     "/home/user/websocket-openai/test/audio-converter.test.js"
@@ -12,10 +12,10 @@
   ],
   "NODE_OPTIONS": "\"--max-old-space-size=8192\" \"--import=file:///home/user/websocket-openai/node_modules/@tapjs/processinfo/dist/esm/import.mjs\"",
   "cwd": "/home/user/websocket-openai",
-  "pid": 2221,
-  "ppid": 2210,
+  "pid": 5315,
+  "ppid": 5304,
   "parent": null,
-  "uuid": "a8a6f32f-cec9-4178-9bb2-76fc9414a795",
+  "uuid": "8b13bf6f-d5bb-44f1-b8fc-00a48a3025a1",
   "files": [
     "/home/user/websocket-openai/test/audio-converter.test.js",
     "/home/user/websocket-openai/node_modules/@isaacs/ts-node-temp-fork-for-pr-2009/import.mjs",
@@ -29,8 +29,6 @@
     "/home/user/websocket-openai/node_modules/@tapjs/mock/dist/esm/munge-mocks.js",
     "/home/user/websocket-openai/node_modules/@tapjs/mock/dist/esm/resolve-mock-entry-point.js",
     "/home/user/websocket-openai/node_modules/@tapjs/mock/dist/esm/service-key.js",
-    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/call-site-like.js",
-    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/require-resolve.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/get-all-conditional-values.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/get-all-conditions.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/get-unique-condition-sets.js",
@@ -38,13 +36,14 @@
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-all-local-imports.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-conditional-value.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-import.js",
+    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/call-site-like.js",
+    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/require-resolve.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/is-windows.js",
-    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/parse.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/get-conditional-values-list.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/errors.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/get-named-exports-list.js",
-    "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-export.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/read-pkg.js",
+    "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-export.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/star-glob.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/to-path.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/file-exists.js",
@@ -52,8 +51,9 @@
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/to-file-url.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-dependency-export.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-package-import.js",
-    "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/find-star-match.js",
+    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/parse.js",
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/read-json.js",
+    "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/find-star-match.js",
     "/home/user/websocket-openai/node_modules/glob/dist/esm/index.js",
     "/home/user/websocket-openai/node_modules/walk-up-path/dist/esm/index.js",
     "/home/user/websocket-openai/node_modules/glob/node_modules/minimatch/dist/esm/index.js",
@@ -148,12 +148,12 @@
     "/home/user/websocket-openai/node_modules/@tapjs/snapshot/dist/esm/clean-cwd.js",
     "/home/user/websocket-openai/node_modules/@tapjs/snapshot/dist/esm/provider.js",
     "/home/user/websocket-openai/node_modules/@isaacs/cliui/index.mjs",
+    "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/brace-patterns.js",
     "/home/user/websocket-openai/node_modules/tap-yaml/dist/esm/parse.js",
     "/home/user/websocket-openai/node_modules/tap-yaml/dist/esm/stringify.js",
     "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/final-plan.js",
-    "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/brace-patterns.js",
-    "/home/user/websocket-openai/node_modules/diff/lib/index.mjs",
     "/home/user/websocket-openai/node_modules/@tapjs/processinfo/dist/esm/spawn-opts.js",
+    "/home/user/websocket-openai/node_modules/diff/lib/index.mjs",
     "/home/user/websocket-openai/node_modules/tcompare/dist/esm/format.js",
     "/home/user/websocket-openai/node_modules/tcompare/dist/esm/has-strict.js",
     "/home/user/websocket-openai/node_modules/tcompare/dist/esm/has.js",
@@ -204,8 +204,8 @@
     "/home/user/websocket-openai/node_modules/@tapjs/error-serdes/dist/esm/test-stream-deserialize.js",
     "/home/user/websocket-openai/node_modules/@tapjs/error-serdes/dist/esm/messages.js",
     "/home/user/websocket-openai/node_modules/@tapjs/error-serdes/dist/esm/constants.js",
-    "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-nested-location.js",
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/loc-from-at.js",
+    "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-nested-location.js",
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-message-data.js",
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-point-message-data.js",
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-point-results.js",
@@ -250,12 +250,6 @@
     "/home/user/websocket-openai/node_modules/@tapjs/mock/dist/esm/service-key.js": [
       "/home/user/websocket-openai/node_modules/@tapjs/mock/src/service-key.ts"
     ],
-    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/call-site-like.js": [
-      "/home/user/websocket-openai/node_modules/@tapjs/stack/src/call-site-like.ts"
-    ],
-    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/require-resolve.js": [
-      "/home/user/websocket-openai/node_modules/@tapjs/stack/src/require-resolve.ts"
-    ],
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/get-all-conditional-values.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/get-all-conditional-values.ts"
     ],
@@ -277,11 +271,14 @@
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-import.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/resolve-import.ts"
     ],
+    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/call-site-like.js": [
+      "/home/user/websocket-openai/node_modules/@tapjs/stack/src/call-site-like.ts"
+    ],
+    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/require-resolve.js": [
+      "/home/user/websocket-openai/node_modules/@tapjs/stack/src/require-resolve.ts"
+    ],
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/is-windows.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/is-windows.ts"
-    ],
-    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/parse.js": [
-      "/home/user/websocket-openai/node_modules/@tapjs/stack/src/parse.ts"
     ],
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/get-conditional-values-list.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/get-conditional-values-list.ts"
@@ -292,11 +289,11 @@
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/get-named-exports-list.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/get-named-exports-list.ts"
     ],
-    "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-export.js": [
-      "/home/user/websocket-openai/node_modules/resolve-import/src/resolve-export.ts"
-    ],
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/read-pkg.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/read-pkg.ts"
+    ],
+    "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-export.js": [
+      "/home/user/websocket-openai/node_modules/resolve-import/src/resolve-export.ts"
     ],
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/star-glob.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/star-glob.ts"
@@ -319,11 +316,14 @@
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/resolve-package-import.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/resolve-package-import.ts"
     ],
-    "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/find-star-match.js": [
-      "/home/user/websocket-openai/node_modules/resolve-import/src/find-star-match.ts"
+    "/home/user/websocket-openai/node_modules/@tapjs/stack/dist/esm/parse.js": [
+      "/home/user/websocket-openai/node_modules/@tapjs/stack/src/parse.ts"
     ],
     "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/read-json.js": [
       "/home/user/websocket-openai/node_modules/resolve-import/src/read-json.ts"
+    ],
+    "/home/user/websocket-openai/node_modules/resolve-import/dist/esm/find-star-match.js": [
+      "/home/user/websocket-openai/node_modules/resolve-import/src/find-star-match.ts"
     ],
     "/home/user/websocket-openai/node_modules/glob/dist/esm/index.js": [
       "/home/user/websocket-openai/node_modules/glob/src/index.ts"
@@ -592,6 +592,9 @@
     "/home/user/websocket-openai/node_modules/@tapjs/snapshot/dist/esm/provider.js": [
       "/home/user/websocket-openai/node_modules/@tapjs/snapshot/src/provider.ts"
     ],
+    "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/brace-patterns.js": [
+      "/home/user/websocket-openai/node_modules/tap-parser/src/brace-patterns.ts"
+    ],
     "/home/user/websocket-openai/node_modules/tap-yaml/dist/esm/parse.js": [
       "/home/user/websocket-openai/node_modules/tap-yaml/src/parse.ts"
     ],
@@ -600,9 +603,6 @@
     ],
     "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/final-plan.js": [
       "/home/user/websocket-openai/node_modules/tap-parser/src/final-plan.ts"
-    ],
-    "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/brace-patterns.js": [
-      "/home/user/websocket-openai/node_modules/tap-parser/src/brace-patterns.ts"
     ],
     "/home/user/websocket-openai/node_modules/@tapjs/processinfo/dist/esm/spawn-opts.js": [
       "/home/user/websocket-openai/node_modules/@tapjs/processinfo/src/spawn-opts.ts"
@@ -745,11 +745,11 @@
     "/home/user/websocket-openai/node_modules/@tapjs/error-serdes/dist/esm/constants.js": [
       "/home/user/websocket-openai/node_modules/@tapjs/error-serdes/src/constants.ts"
     ],
-    "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-nested-location.js": [
-      "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/src/test-nested-location.ts"
-    ],
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/loc-from-at.js": [
       "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/src/loc-from-at.ts"
+    ],
+    "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-nested-location.js": [
+      "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/src/test-nested-location.ts"
     ],
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-message-data.js": [
       "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/src/test-message-data.ts"
@@ -782,9 +782,9 @@
       "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/src/pretty-diff.ts"
     ]
   },
-  "root": "a8a6f32f-cec9-4178-9bb2-76fc9414a795",
+  "root": "8b13bf6f-d5bb-44f1-b8fc-00a48a3025a1",
   "externalID": "test/audio-converter.test.js",
   "code": 0,
   "signal": null,
-  "runtime": 2700.125052
+  "runtime": 2281.267695
 }

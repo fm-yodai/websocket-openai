@@ -1,5 +1,5 @@
 {
-  "date": "2026-02-16T03:55:47.625Z",
+  "date": "2026-02-17T03:04:51.992Z",
   "argv": [
     "/opt/node22/bin/node",
     "/home/user/websocket-openai/test/index.test.js"
@@ -12,10 +12,10 @@
   ],
   "NODE_OPTIONS": "\"--max-old-space-size=8192\" \"--import=file:///home/user/websocket-openai/node_modules/@tapjs/processinfo/dist/esm/import.mjs\"",
   "cwd": "/home/user/websocket-openai",
-  "pid": 2222,
-  "ppid": 2210,
+  "pid": 5316,
+  "ppid": 5304,
   "parent": null,
-  "uuid": "4b3b1ab0-d907-47fc-9e09-0f9511c1525f",
+  "uuid": "924fe407-b475-47f4-862d-53d8fbc5dd0a",
   "files": [
     "/home/user/websocket-openai/test/index.test.js",
     "/home/user/websocket-openai/node_modules/@isaacs/ts-node-temp-fork-for-pr-2009/import.mjs",
@@ -99,8 +99,8 @@
     "/home/user/websocket-openai/node_modules/@tapjs/test/test-built/dist/esm/index.js",
     "/home/user/websocket-openai/node_modules/@tapjs/test/dist/esm/default-plugins.js",
     "/home/user/websocket-openai/node_modules/async-hook-domain/dist/mjs/index.js",
-    "/home/user/websocket-openai/node_modules/@tapjs/core/dist/esm/throw-to-parser.js",
     "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/index.js",
+    "/home/user/websocket-openai/node_modules/@tapjs/core/dist/esm/throw-to-parser.js",
     "/home/user/websocket-openai/node_modules/@tapjs/core/dist/esm/diags.js",
     "/home/user/websocket-openai/node_modules/@tapjs/core/dist/esm/message-from-error.js",
     "/home/user/websocket-openai/node_modules/@tapjs/processinfo/dist/esm/index.js",
@@ -146,8 +146,8 @@
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/serialize.js",
     "/home/user/websocket-openai/node_modules/@tapjs/snapshot/dist/esm/clean-cwd.js",
     "/home/user/websocket-openai/node_modules/@tapjs/snapshot/dist/esm/provider.js",
-    "/home/user/websocket-openai/node_modules/@isaacs/cliui/index.mjs",
     "/home/user/websocket-openai/node_modules/tap-yaml/dist/esm/parse.js",
+    "/home/user/websocket-openai/node_modules/@isaacs/cliui/index.mjs",
     "/home/user/websocket-openai/node_modules/tap-yaml/dist/esm/stringify.js",
     "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/final-plan.js",
     "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/brace-patterns.js",
@@ -179,11 +179,11 @@
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/stdio.js",
     "/home/user/websocket-openai/node_modules/@tapjs/node-serialize/dist/esm/test-map.js",
     "/home/user/websocket-openai/node_modules/@tapjs/snapshot/dist/esm/require.js",
+    "/home/user/websocket-openai/node_modules/tap-yaml/dist/esm/types/index.js",
     "/home/user/websocket-openai/node_modules/@isaacs/cliui/build/lib/index.js",
     "/home/user/websocket-openai/node_modules/@isaacs/cliui/node_modules/string-width/index.js",
     "/home/user/websocket-openai/node_modules/@isaacs/cliui/node_modules/strip-ansi/index.js",
     "/home/user/websocket-openai/node_modules/wrap-ansi/index.js",
-    "/home/user/websocket-openai/node_modules/tap-yaml/dist/esm/types/index.js",
     "/home/user/websocket-openai/node_modules/tcompare/dist/esm/react-element-to-jsx-string.js",
     "/home/user/websocket-openai/node_modules/rimraf/dist/esm/platform.js",
     "/home/user/websocket-openai/node_modules/rimraf/dist/esm/default-tmp.js",
@@ -240,10 +240,10 @@
     "/home/user/websocket-openai/node_modules/node-fetch/src/utils/is.js",
     "/home/user/websocket-openai/node_modules/node-fetch/src/utils/referrer.js",
     "/home/user/websocket-openai/node_modules/fetch-blob/from.js",
-    "/home/user/websocket-openai/node_modules/fetch-blob/file.js",
-    "/home/user/websocket-openai/node_modules/fetch-blob/index.js",
+    "/home/user/websocket-openai/node_modules/node-fetch/src/utils/get-search.js",
     "/home/user/websocket-openai/node_modules/node-fetch/src/errors/base.js",
-    "/home/user/websocket-openai/node_modules/node-fetch/src/utils/get-search.js"
+    "/home/user/websocket-openai/node_modules/fetch-blob/index.js",
+    "/home/user/websocket-openai/node_modules/fetch-blob/file.js"
   ],
   "sources": {
     "/home/user/websocket-openai/node_modules/@tapjs/mock/dist/esm/import.mjs": [
@@ -474,11 +474,11 @@
     "/home/user/websocket-openai/node_modules/async-hook-domain/dist/mjs/index.js": [
       "/home/user/websocket-openai/node_modules/async-hook-domain/src/index.ts"
     ],
-    "/home/user/websocket-openai/node_modules/@tapjs/core/dist/esm/throw-to-parser.js": [
-      "/home/user/websocket-openai/node_modules/@tapjs/core/src/throw-to-parser.ts"
-    ],
     "/home/user/websocket-openai/node_modules/tap-parser/dist/esm/index.js": [
       "/home/user/websocket-openai/node_modules/tap-parser/src/index.ts"
+    ],
+    "/home/user/websocket-openai/node_modules/@tapjs/core/dist/esm/throw-to-parser.js": [
+      "/home/user/websocket-openai/node_modules/@tapjs/core/src/throw-to-parser.ts"
     ],
     "/home/user/websocket-openai/node_modules/@tapjs/core/dist/esm/diags.js": [
       "/home/user/websocket-openai/node_modules/@tapjs/core/src/diags.ts"
@@ -660,11 +660,11 @@
     "/home/user/websocket-openai/node_modules/tcompare/dist/esm/styles.js": [
       "/home/user/websocket-openai/node_modules/tcompare/src/styles.ts"
     ],
-    "/home/user/websocket-openai/node_modules/rimraf/dist/esm/opt-arg.js": [
-      "/home/user/websocket-openai/node_modules/rimraf/src/opt-arg.ts"
-    ],
     "/home/user/websocket-openai/node_modules/rimraf/dist/esm/path-arg.js": [
       "/home/user/websocket-openai/node_modules/rimraf/src/path-arg.ts"
+    ],
+    "/home/user/websocket-openai/node_modules/rimraf/dist/esm/opt-arg.js": [
+      "/home/user/websocket-openai/node_modules/rimraf/src/opt-arg.ts"
     ],
     "/home/user/websocket-openai/node_modules/rimraf/dist/esm/rimraf-manual.js": [
       "/home/user/websocket-openai/node_modules/rimraf/src/rimraf-manual.ts"
@@ -808,9 +808,9 @@
       "/home/user/websocket-openai/node_modules/data-uri-to-buffer/src/index.ts"
     ]
   },
-  "root": "4b3b1ab0-d907-47fc-9e09-0f9511c1525f",
+  "root": "924fe407-b475-47f4-862d-53d8fbc5dd0a",
   "externalID": "test/index.test.js",
-  "code": 1,
-  "signal": null,
-  "runtime": 3985.804034
+  "code": null,
+  "signal": "SIGALRM",
+  "runtime": 42258.781029
 }
