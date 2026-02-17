@@ -4,7 +4,9 @@ process.env.NODE_ENV = 'test';
 
 const { default: fastify } = await import('../index.js');
 
-tap.teardown(() => fastify.close());
+tap.teardown(async () => {
+  await fastify.close();
+});
 
 tap.test('Fastify server', async t => {
   await t.test('GET /', async t => {
@@ -32,25 +34,22 @@ tap.test('Fastify server', async t => {
   });
 
   await t.test('POST /answer', async t => {
-    const response = await fastify.inject({ method: 'POST', url: '/answer' });
+    const response = await fastify.inject({
+      method: 'POST',
+      url: '/answer',
+      payload: { from: '819012345678', to: '81312345678', uuid: 'test-uuid-123' }
+    });
     t.equal(response.statusCode, 200, 'returns a status code of 200');
-    t.same(response.json(), [
-      {
-        action: 'talk',
-        text: '担当者にお繋ぎいたしますので、このまま少々お待ちください。',
-        language: 'ja-JP'
-      },
-      {
-        action: 'connect',
-        endpoint: [
-          {
-            type: 'websocket',
-            uri: `wss://${process.env.SERVER_URL}/media-stream`,
-            contentType: 'audio/l16;rate=16000',
-          }
-        ]
-      }
-    ], 'returns the correct NCCO response');
+    const body = response.json();
+    t.equal(body[0].action, 'talk', 'first action is talk');
+    t.equal(body[0].text, '担当者にお繋ぎいたしますので、このまま少々お待ちください。', 'talk text is correct');
+    t.equal(body[1].action, 'connect', 'second action is connect');
+    const wsUri = body[1].endpoint[0].uri;
+    t.ok(wsUri.includes('caller=819012345678'), 'URI contains caller parameter');
+    t.ok(wsUri.includes('called=81312345678'), 'URI contains called parameter');
+    t.ok(wsUri.includes('uuid=test-uuid-123'), 'URI contains uuid parameter');
+    t.ok(wsUri.includes('token='), 'URI contains token parameter');
+    t.equal(body[1].endpoint[0].contentType, 'audio/l16;rate=16000', 'contentType is correct');
   });
 
   await t.test('POST /connect without API key returns 401', async t => {

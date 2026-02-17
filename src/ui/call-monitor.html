@@ -192,6 +192,16 @@ class McpApp {
   }
 }
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // ── UIロジック ───────────────────────────────────────
 const app = new McpApp('vonage-reception-monitor', '1.0.0');
 let currentCalls = [];
@@ -228,38 +238,38 @@ function renderCalls(calls) {
   }
 
   list.innerHTML = calls.map(call => `
-    <div class="call-card ${call.status}">
+    <div class="call-card ${escapeHtml(call.status)}">
       <div class="call-header">
         <div class="caller-info">
           <span class="caller-icon">${call.status === 'active' ? '🟢' : call.status === 'transferred' ? '🔀' : '⚪'}</span>
           <div>
-            <div class="caller-number">${formatPhone(call.caller)}</div>
-            ${call.userName ? `<div class="caller-name">${call.userName} 様</div>` : ''}
+            <div class="caller-number">${escapeHtml(formatPhone(call.caller))}</div>
+            ${call.userName ? `<div class="caller-name">${escapeHtml(call.userName)} 様</div>` : ''}
           </div>
         </div>
-        <span class="status-badge ${call.status}">${
+        <span class="status-badge ${escapeHtml(call.status)}">${
           call.status === 'active' ? '通話中' :
           call.status === 'transferred' ? '転送済み' : '終了'
         }</span>
       </div>
       <div class="call-meta">
-        <span>着信: ${new Date(call.startTime).toLocaleTimeString('ja-JP')}</span>
-        <span>通話時間: ${duration(call.startTime, call.endTime)}</span>
-        ${call.transferredTo ? `<span>転送先: ${formatPhone(call.transferredTo)}</span>` : ''}
+        <span>着信: ${escapeHtml(new Date(call.startTime).toLocaleTimeString('ja-JP'))}</span>
+        <span>通話時間: ${escapeHtml(duration(call.startTime, call.endTime))}</span>
+        ${call.transferredTo ? `<span>転送先: ${escapeHtml(formatPhone(call.transferredTo))}</span>` : ''}
       </div>
       ${call.transcripts?.length ? `
         <div class="transcripts">
           ${call.transcripts.map(t => `
             <div class="transcript-line">
-              <span class="role ${t.role}">${t.role === 'user' ? '発信者' : 'AI'}:</span>
-              <span>${t.text}</span>
+              <span class="role ${escapeHtml(t.role)}">${t.role === 'user' ? '発信者' : 'AI'}:</span>
+              <span>${escapeHtml(t.text)}</span>
             </div>
           `).join('')}
         </div>
       ` : ''}
       ${call.status === 'active' ? `
         <div class="call-actions">
-          <button class="btn primary" onclick="handleTransfer('${call.uuid}')">🔀 オペレーターに転送</button>
+          <button class="btn primary" onclick="handleTransfer('${escapeHtml(call.uuid)}')">🔀 オペレーターに転送</button>
         </div>
       ` : ''}
     </div>

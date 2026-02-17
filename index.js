@@ -27,6 +27,10 @@ const {
   VONAGE_TRANSPORT_NUMBER
 } = process.env;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY_SECRET || process.env.OPENAI_API_KEY;
+const CONNECT_API_KEY = process.env.CONNECT_API_KEY || VONAGE_APPLICATION_ID;
+
+// WebSocket 接続トークン管理: /answer で発行し /media-stream で検証
+const wsTokens = new Map();
 
 // 必須情報がそろっていなければ起動を止める
 if (!OPENAI_MODEL || !SERVER_URL || !OPENAI_API_KEY) {
@@ -64,11 +68,30 @@ const LOG_EVENT_TYPES = [
   'error'
 ];
 
-let wsOpenAiOpened = false;
-let isProcessingAudio = true;
-
 // 通話レジストリ: MCP サーバーから通話状態を参照するために使用
 const callRegistry = new Map();
+const CALL_REGISTRY_TTL_MS = 24 * 60 * 60 * 1000; // 24時間
+const CALL_REGISTRY_MAX_SIZE = 1000;
+
+// 古いエントリを定期的に削除
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, call] of callRegistry) {
+    const age = now - new Date(call.startTime).getTime();
+    if (age > CALL_REGISTRY_TTL_MS) {
+      callRegistry.delete(key);
+    }
+  }
+  // 最大件数を超えた場合、古い順に削除
+  if (callRegistry.size > CALL_REGISTRY_MAX_SIZE) {
+    const sorted = Array.from(callRegistry.entries())
+      .sort((a, b) => new Date(a[1].startTime) - new Date(b[1].startTime));
+    const excess = callRegistry.size - CALL_REGISTRY_MAX_SIZE;
+    for (let i = 0; i < excess; i++) {
+      callRegistry.delete(sorted[i][0]);
+    }
+  }
+}, 60 * 60 * 1000).unref(); // 1時間ごとにクリーンアップ (unref でプロセス終了を妨げない)
 
 // system-message.txt を優先し、ファイルがない場合はデフォルト文字列を使用
 const SYSTEM_MESSAGE_FILE = new URL('./system-message.txt', import.meta.url);
@@ -91,9 +114,6 @@ const buildPublicUrl = (pathname = '') => {
   const baseUrl = hasProtocol ? SERVER_URL : `https://${SERVER_URL}`;
   return `${baseUrl}${pathname}`;
 };
-// const SYSTEM_MESSAGE = 'あなたは明るくフレンドリーなAIアシスタントです。ユーザーが興味を持っている話題について会話し、適切な情報を提供します。ジョークや楽しい話題を交えながら、常にポジティブでいてください。なお、会話はすべて日本語で行いますが、ユーザーが言語を指定した場合は、その言語で回答をしてください。また、会話の最初は「こんにちは。今日はどのようなお話をしましょうか？」と挨拶をしてください。';
-// const SYSTEM_MESSAGE = 'You are a bright and friendly AI assistant. You converse about topics of interest to the user and provide relevant information. Stay positive at all times with jokes and fun topics.';
-
 // ルート: サービスが稼働していることを確認するための最小限のヘルスチェック
 fastify.get('/', async (request, reply) => {
   reply.send({ message: 'Vonage Voiceサーバーが稼働中です。' });
@@ -135,11 +155,11 @@ fastify.post('/connect', async (request, reply) => {
   if (!apiKeyHeader) {
     return reply.status(401).send({ error: 'APIキーが指定されていません。' });
   }
-  if (!VONAGE_APPLICATION_ID) {
-    console.error('APIキー検証に必要な VONAGE_APPLICATION_ID が未設定です。');
+  if (!CONNECT_API_KEY) {
+    console.error('APIキー検証に必要な CONNECT_API_KEY (または VONAGE_APPLICATION_ID) が未設定です。');
     return reply.status(500).send({ error: 'サーバー側のAPIキー設定に問題があります。' });
   }
-  if (apiKeyHeader !== VONAGE_APPLICATION_ID) {
+  if (apiKeyHeader !== CONNECT_API_KEY) {
     return reply.status(403).send({ error: 'APIキーが一致しません。' });
   }
 
@@ -156,7 +176,7 @@ fastify.post('/connect', async (request, reply) => {
   let jwtToken;
   try {
     jwtToken = createVonageJwt();
-    console.log('Vonage JWT を生成しました', jwtToken);
+    console.log('Vonage JWT を生成しました');
   } catch (error) {
     console.error('Vonage JWT の生成に失敗しました', error);
     return reply.status(500).send({ error: 'Vonage JWT の生成に失敗しました。' });
@@ -212,6 +232,12 @@ fastify.all('/answer', async (request, reply) => {
   const caller = from || 'unknown';
   const called = to || 'unknown';
 
+  // WebSocket 接続用のワンタイムトークンを生成
+  const wsToken = randomUUID();
+  wsTokens.set(wsToken, { caller, called, uuid, createdAt: Date.now() });
+  // 5分後にトークンを無効化
+  setTimeout(() => wsTokens.delete(wsToken), 5 * 60 * 1000);
+
   // Vonage に返す NCCO: 簡単な挨拶のあと WebSocket へ接続
   const nccoResponse = [
     {
@@ -224,7 +250,7 @@ fastify.all('/answer', async (request, reply) => {
       endpoint: [
         {
           type: 'websocket',
-          uri: `wss://${SERVER_URL}/media-stream?caller=${caller}&called=${called}&uuid=${uuid}`,
+          uri: `wss://${SERVER_URL}/media-stream?caller=${encodeURIComponent(caller)}&called=${encodeURIComponent(called)}&uuid=${encodeURIComponent(uuid || '')}&token=${wsToken}`,
           contentType: 'audio/l16;rate=16000',
         }
       ]
@@ -239,7 +265,16 @@ fastify.register(async (fastify) => {
   fastify.get('/media-stream', { websocket: true }, (connection, req) => {
     console.log('クライアントが接続されました');
 
-    const { caller, called, uuid } = req.query || {};
+    const { caller, called, uuid, token } = req.query || {};
+
+    // WebSocket 接続トークンの検証
+    if (!token || !wsTokens.has(token)) {
+      console.warn('WebSocket 接続トークンが無効です。接続を拒否します。');
+      connection.close();
+      return;
+    }
+    wsTokens.delete(token); // ワンタイムトークンなので使用後に削除
+
     console.log(`Call Context - Caller: ${caller}, Called: ${called}, UUID: ${uuid}`);
 
     // 通話をレジストリに登録
@@ -253,8 +288,9 @@ fastify.register(async (fastify) => {
       userName: null,
     });
 
-    // 会話の状態やタイミングを記録する変数
-    // let responseId = null;
+    // 会話の状態やタイミングを記録する変数（コネクションごとのローカル状態）
+    let wsOpenAiOpened = false;
+    let isProcessingAudio = true;
     let conversationItemId = null;
     let responseStartTimestamp = null;  // 応答開始時のタイムスタンプ
     let latestAudioTimestamp = 0;       // 最新の音声タイムスタンプ
@@ -277,7 +313,6 @@ fastify.register(async (fastify) => {
           },
           input_audio_format: 'pcm16',
           output_audio_format: 'pcm16',
-          voice: 'alloy',
           voice: 'alloy',
           instructions: `${SYSTEM_MESSAGE}
           
@@ -343,17 +378,15 @@ fastify.register(async (fastify) => {
       wsOpenAiOpened = true;
     };
 
+    // セッション初期化の状態管理
+    let sessionReady = false;
+
     // OpenAI への接続が確立したときの初期処理
     openAiWs.on('open', () => {
       console.log('OpenAI Realtime APIに接続しました');
-      setTimeout(sendSessionUpdate, 250); // コネクションの開設を.25秒待つ
+      // session.created イベントを待たず、open 直後にセッション更新を送信
+      sendSessionUpdate();
       console.log('OpenAI の準備が整いました。');
-
-      // セッション更新の少し後に初期メッセージを送信
-      setTimeout(() => {
-        // 初期メッセージを送信して会話を開始
-        sendInitialGreeting();
-      }, 1000); // セッション更新の後、1秒後に初期メッセージを送信
     });
 
     // 初期挨拶メッセージを送信する関数（シンプルバージョン）
@@ -405,9 +438,11 @@ fastify.register(async (fastify) => {
         if (LOG_EVENT_TYPES.includes(response.type)) {
           console.log(`Received event: ${response.type}`, response);
         }
-        // セッション更新完了の通知
-        if (response.type === 'session.updated') {
+        // セッション更新完了の通知 → 初期挨拶を送信
+        if (response.type === 'session.updated' && !sessionReady) {
           console.log('Session updated successfully:', response);
+          sessionReady = true;
+          sendInitialGreeting();
         }
 
         // OpenAI からのアシスタント応答アイテムを記録
@@ -444,8 +479,8 @@ fastify.register(async (fastify) => {
           // 実際の経過時間を計算（応答開始から現在までの時間）
           let elapsedTime = 1500; // デフォルト値
 
-          if (responseStartTimestamp && response.audio_start_ms) {
-            elapsedTime = response.audio_start_ms - responseStartTimestamp;
+          if (responseStartTimestamp) {
+            elapsedTime = Date.now() - responseStartTimestamp;
             console.log(`応答からの経過時間: ${elapsedTime}ms`);
 
             // 音声が短すぎる場合は最小値を設定
@@ -627,12 +662,18 @@ fastify.register(async (fastify) => {
     openAiWs.on('close', () => {
       console.log('OpenAIから切断されました');
       wsOpenAiOpened = false;
-      connection.close();
+      if (connection.readyState === WebSocket.OPEN) connection.close();
     });
 
-    // エラーはログにのみ記録
+    // OpenAI 接続エラー時は Vonage 側も切断
     openAiWs.on('error', (error) => {
       console.error('👺 OpenAI WebSocketエラー:', error);
+      const callOnError = callRegistry.get(uuid);
+      if (callOnError && callOnError.status === 'active') {
+        callOnError.status = 'error';
+        callOnError.endTime = new Date().toISOString();
+      }
+      if (connection.readyState === WebSocket.OPEN) connection.close();
     });
   });
 });

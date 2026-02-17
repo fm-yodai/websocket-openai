@@ -232,6 +232,16 @@ class McpApp {
   }
 }
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // ── UIロジック ──
 const app = new McpApp('vonage-transfer-dialog', '1.0.0');
 let callData = {};
@@ -271,8 +281,8 @@ function populateCallInfo(data) {
     document.getElementById('transcript-section').style.display = 'block';
     document.getElementById('transcripts').innerHTML = info.transcripts.map(t => `
       <div class="transcript-line">
-        <span class="role ${t.role}">${t.role === 'user' ? '発信者' : 'AI'}:</span>
-        ${t.text}
+        <span class="role ${escapeHtml(t.role)}">${t.role === 'user' ? '発信者' : 'AI'}:</span>
+        ${escapeHtml(t.text)}
       </div>
     `).join('');
   }
